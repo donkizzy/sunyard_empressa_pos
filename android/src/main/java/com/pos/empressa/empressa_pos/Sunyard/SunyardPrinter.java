@@ -48,7 +48,7 @@ public class SunyardPrinter {
 
     public void startPrint(@NonNull MethodCall call) {
         //String stan, int originalMinorAmount, String terminalId, String merchantId, String transmissionDate, String transactionComment
-//        Bitmap bitmap = BitmapFactory.decodeResource();
+//        Bitmap bitmap = BitmapFactory.decodeResource();Ha
 //        Bitmap bitmapForWatermark  = print.createBitmapForWatermark(bitmap);
 //        print.appendImage(bitmap);
 //        print.appendImage(bitmapForWatermark, Align.CENTER);
@@ -68,7 +68,9 @@ public class SunyardPrinter {
         print.appendTextEntity2(new TextEntity(call.argument("transactionComment")+ "\n", mCh, mEn, FontLattice.THIRTY, false, Align.CENTER,true));
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         print.limitTimePrint(10, print.getPrintBuffer());
-        print.startPrint();
+        print.startPrint(
+
+        );
     }
 
 }

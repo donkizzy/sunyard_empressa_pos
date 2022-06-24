@@ -8,15 +8,15 @@ import 'package:flutter/services.dart';
 class EmpressaPos {
   static const MethodChannel _channel = const MethodChannel('empressa_pos');
 
-  static Future<CardDetails> search(int transactionAmount) async {
-    CardDetails cardDetails;
+  static Future<CardDetails?> search(int transactionAmount) async {
+    CardDetails? cardDetails;
     try {
       var result = await _channel
           .invokeMethod('searchCard', {"transactionAmount": transactionAmount});
       print(result);
       var cardResponse = Map<String, String>.from(result);
       cardDetails = CardDetails.fromJson(cardResponse);
-      var track2Data = cardDetails.the57;
+      var track2Data = cardDetails.the57!;
       var strTrack2 = track2Data.split("F")[0];
       var pan = strTrack2.split('D')[0];
       var expiry = strTrack2.split('D')[1].substring(0, 4);
@@ -56,7 +56,7 @@ class EmpressaPos {
     }
   }
 
-  static Future<bool> checkCard() async {
+  static Future<bool?> checkCard() async {
     var result ;
     try {
        result  = await _channel.invokeMethod('checkSunyardCard');
@@ -76,9 +76,9 @@ class EmpressaPos {
     }
   }
 
-  static Future<List<BluetoothDevices>> startMPosDiscovery() async {
+  static Future<List<BluetoothDevices>?> startMPosDiscovery() async {
     var result ;
-    List<BluetoothDevices> bluetoothDevices ;
+    List<BluetoothDevices>? bluetoothDevices ;
     try {
       result  = await _channel.invokeMethod('startMPosDiscovery');
       bluetoothDevices = List<BluetoothDevices>.from(jsonDecode(result).map((x) => BluetoothDevices.fromJson(x)));
@@ -89,7 +89,7 @@ class EmpressaPos {
     return bluetoothDevices ;
   }
 
-  static Future<bool> connectMPosDevice({String bluetoothName,String bluetoothMac}) async {
+  static Future<bool?> connectMPosDevice({String? bluetoothName,String? bluetoothMac}) async {
     var result ;
     try {
        result  = await _channel.invokeMethod('connectMPos',{'bluetoothName':bluetoothName,'bluetoothMac':bluetoothMac});

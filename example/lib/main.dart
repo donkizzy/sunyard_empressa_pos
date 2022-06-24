@@ -1,9 +1,9 @@
-import 'package:empressa_pos/bluetooth_devices.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
+import 'package:empressa_pos/bluetooth_devices.dart';
 import 'package:empressa_pos/pos.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
