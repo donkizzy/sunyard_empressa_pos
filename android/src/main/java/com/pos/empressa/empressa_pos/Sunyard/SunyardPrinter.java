@@ -53,19 +53,23 @@ public class SunyardPrinter {
 //        print.appendImage(bitmap);
 //        print.appendImage(bitmapForWatermark, Align.CENTER);
 
+        print.appendTextEntity2(new TextEntity(call.argument("vendorName"), mCh, mEn, FontLattice.THIRTY, false, Align.CENTER,true));
         print.appendTextEntity2(new TextEntity("Transaction Receipt\n", mCh, mEn, FontLattice.THIRTY, false, Align.CENTER,true));
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         print.appendTextEntity2(new TextEntity("AMOUNT: NGN" +call.argument("originalMinorAmount").toString() + "\n", mCh, mEn, FontLattice.THIRTY, false, Align.CENTER,true));
         print.appendTextEntity2(print.getSeparatorLinetEntity());
-        print.appendTextEntity2(new TextEntity("TerminalID: "+call.argument("terminalId")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
-        print.appendTextEntity2(new TextEntity("MerchantID: "+call.argument("merchantId")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
+        print.appendTextEntity2(new TextEntity("Merchant Name: "+call.argument("merchantName")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
+        print.appendTextEntity2(new TextEntity("Merchant Location: "+call.argument("merchantLocation")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
+        print.appendTextEntity2(new TextEntity("Reference Number: "+call.argument("transactionRef")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
         print.appendTextEntity2(new TextEntity("Stan:   "+call.argument("originalTransStan")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
-        print.appendTextEntity2(new TextEntity("Date:   "+ call.argument("transmissionDate")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
         print.appendTextEntity2(new TextEntity("Card PAN:    "+call.argument("cardPan")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
         print.appendTextEntity2(new TextEntity("Card Expiry: "+call.argument("expiryDate")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
-        print.appendTextEntity2(new TextEntity("Ref: "+call.argument("authCode")+ "\n\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
+        print.appendTextEntity2(new TextEntity("TerminalID: "+call.argument("terminalId")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
+        print.appendTextEntity2(new TextEntity("MerchantID: "+call.argument("merchantId")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
+        print.appendTextEntity2(new TextEntity("Date:   "+ call.argument("transmissionDate")+ "\n", mCh, mEn, FontLattice.TWENTY_FOUR, false, Align.LEFT,true));
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         print.appendTextEntity2(new TextEntity(call.argument("transactionComment")+ "\n", mCh, mEn, FontLattice.THIRTY, false, Align.CENTER,true));
+        print.appendTextEntity2(new TextEntity("Built on Fizido, Powered by Support MFB", mCh, mEn, FontLattice.TWENTY, false, Align.CENTER,true));
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         print.limitTimePrint(10, print.getPrintBuffer());
         print.startPrint(
