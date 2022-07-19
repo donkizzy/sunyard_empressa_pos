@@ -30,10 +30,6 @@ public class SunyardPrinter {
         } catch (SDKException e) {
             e.printStackTrace();
         }
-        if (havePrinter) {
-            // Utils.popToast(context, "pos Supports printing");
-
-        }
     }
 
     public void startPrint(@NonNull MethodCall call) {
@@ -60,14 +56,17 @@ public class SunyardPrinter {
         printText(call, "service", "Service");
         printText(call, "beneficiaryName", "Beneficiary Name");
         printText(call, "bankName", "Bank Name");
+        printText(call, "merchant", "Merchant");
         printText(call, "accountNumber", "Account Number");
+        printText(call, "description", "Description");
         printText(call, "bill", "Bill");
         printText(call, "paymentItem", "Payment Item");
         printText(call, "billItem", "Bill Item");
         printText(call, "qty", "Qty");
         printText(call, "packageName", "Package Name");
-        printText(call, "customerId", "Customer Id");
         printText(call, "customerName", "Customer Name");
+        printText(call, "customerId", "Customer Id");
+        printText(call, "customerReference", "Customer Reference");
         printText(call, "transactionFee", "Transaction Fee");
         printText(call, "transactionRef", "Reference Number");
         printText(call, "originalTransStan", "Stan");
@@ -98,6 +97,8 @@ public class SunyardPrinter {
         if (call.argument(key) != null) {
             print.appendTextEntity2(new TextEntity(call.argument(key), mCh, mEn,
                     FontLattice.TWENTY, false, Align.CENTER, true));
+        } else {
+            print.appendTextEntity2(new TextEntity("Built on Fizido, Powered by Support MFB", mCh, mEn, FontLattice.TWENTY, false, Align.CENTER,true));
         }
     }
 }
