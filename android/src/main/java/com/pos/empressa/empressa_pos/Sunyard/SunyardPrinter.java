@@ -95,10 +95,11 @@ public class SunyardPrinter {
 
     private void printFooter(@NonNull MethodCall call, String key) {
         if (call.argument(key) != null) {
-            print.appendTextEntity2(new TextEntity(call.argument(key), mCh, mEn,
+            print.appendTextEntity2(new TextEntity(call.argument(key) + "\n\n\n\n" , mCh, mEn,
                     FontLattice.TWENTY, false, Align.CENTER, true));
         } else {
-            print.appendTextEntity2(new TextEntity("Built on Fizido, Powered by Support MFB", mCh, mEn, FontLattice.TWENTY, false, Align.CENTER,true));
+            print.appendTextEntity2(new TextEntity("Built on Fizido, Powered by Support MFB" + "\n\n\n\n" ,
+                    mCh, mEn, FontLattice.TWENTY, false, Align.CENTER,true));
         }
     }
 }
