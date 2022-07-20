@@ -50,6 +50,8 @@ public class SunyardPrinter {
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         printText(call, "merchantName", "Merchant Name");
         printText(call, "merchantLocation", "Merchant Location");
+        printText(call, "sender", "Sender");
+        printText(call, "receiver", "Receiver");
         printText(call, "transactionType", "Transaction Type");
         printText(call, "payee", "Payee");
         printText(call, "phoneNumber", "Phone Number");
@@ -71,6 +73,7 @@ public class SunyardPrinter {
         printText(call, "transactionRef", "Reference Number");
         printText(call, "originalTransStan", "Stan");
         printText(call, "cardPan", "Card PAN");
+        printText(call, "token", "Token");
         printText(call, "expiryDate", "Card Expiry");
         printText(call, "terminalId", "TerminalID");
         printText(call, "merchantId", "MerchantID");
