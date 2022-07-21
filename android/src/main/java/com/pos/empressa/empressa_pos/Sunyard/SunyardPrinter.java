@@ -85,6 +85,14 @@ public class SunyardPrinter {
                 FontLattice.THIRTY, false, Align.CENTER, true));
         printFooter(call, "footer");
         print.appendTextEntity2(print.getSeparatorLinetEntity());
+        print.appendTextEntity2(new TextEntity( "\n", mCh, mEn,
+                FontLattice.THIRTY, false, Align.CENTER, true));
+        print.appendTextEntity2(new TextEntity( "\n", mCh, mEn,
+                FontLattice.THIRTY, false, Align.CENTER, true));
+        print.appendTextEntity2(new TextEntity( "\n", mCh, mEn,
+                FontLattice.THIRTY, false, Align.CENTER, true));
+        print.appendTextEntity2(new TextEntity( "\n", mCh, mEn,
+                FontLattice.THIRTY, false, Align.CENTER, true));
         print.limitTimePrint(10, print.getPrintBuffer());
         print.startPrint();
     }
