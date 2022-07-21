@@ -73,7 +73,7 @@ public class SunyardPrinter {
         printText(call, "transactionRef", "Reference Number");
         printText(call, "originalTransStan", "Stan");
         printText(call, "cardPan", "Card PAN");
-        printText(call, "token", "Token");
+        printText(call, "tokenValue", "Token");
         printText(call, "expiryDate", "Card Expiry");
         printText(call, "terminalId", "TerminalID");
         printText(call, "merchantId", "MerchantID");
