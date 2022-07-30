@@ -22,11 +22,11 @@ class EmpressaPos {
       var expiry = strTrack2.split('D')[1].substring(0, 4);
       var src = strTrack2.split("D")[1].substring(4, 7);
       cardDetails.strTrack2 = strTrack2;
-      cardDetails.pan =  pan;
+      cardDetails.pan = pan;
       cardDetails.expiry = expiry;
       cardDetails.src = src;
     } on PlatformException catch (e) {
-     // cardDetails = null;
+      // cardDetails = null;
       print(e.stacktrace);
     }
     return cardDetails;
@@ -57,50 +57,47 @@ class EmpressaPos {
   }
 
   static Future<bool?> checkCard() async {
-    var result ;
+    var result;
     try {
-       result  = await _channel.invokeMethod('checkSunyardCard');
-
+      result = await _channel.invokeMethod('checkSunyardCard');
     } catch (e) {
       print(e);
     }
-    return result ;
+    return result;
   }
 
   static Future<void> initializeMPos() async {
-    var result ;
+    var result;
     try {
-      result  = await _channel.invokeMethod('initializeMPos');
+      result = await _channel.invokeMethod('initializeMPos');
     } catch (e) {
       print(e);
     }
   }
 
   static Future<List<BluetoothDevices>?> startMPosDiscovery() async {
-    var result ;
-    List<BluetoothDevices>? bluetoothDevices ;
+    var result;
+    List<BluetoothDevices>? bluetoothDevices;
     try {
-      result  = await _channel.invokeMethod('startMPosDiscovery');
-      bluetoothDevices = List<BluetoothDevices>.from(jsonDecode(result).map((x) => BluetoothDevices.fromJson(x)));
+      result = await _channel.invokeMethod('startMPosDiscovery');
+      bluetoothDevices = List<BluetoothDevices>.from(
+          jsonDecode(result).map((x) => BluetoothDevices.fromJson(x)));
       print(bluetoothDevices.toString());
     } catch (e) {
       print(e);
     }
-    return bluetoothDevices ;
+    return bluetoothDevices;
   }
 
-  static Future<bool?> connectMPosDevice({String? bluetoothName,String? bluetoothMac}) async {
-    var result ;
+  static Future<bool?> connectMPosDevice(
+      {String? bluetoothName, String? bluetoothMac}) async {
+    var result;
     try {
-       result  = await _channel.invokeMethod('connectMPos',{'bluetoothName':bluetoothName,'bluetoothMac':bluetoothMac});
-
+      result = await _channel.invokeMethod('connectMPos',
+          {'bluetoothName': bluetoothName, 'bluetoothMac': bluetoothMac});
     } catch (e) {
       print(e);
     }
-    return result ;
+    return result;
   }
-
-
-
-
 }
