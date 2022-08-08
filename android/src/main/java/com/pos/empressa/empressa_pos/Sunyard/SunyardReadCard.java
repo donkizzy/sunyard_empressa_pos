@@ -183,7 +183,7 @@ public class SunyardReadCard {
                             Log.d("EmpressaPosPlugin", "EMVDevice SyncEmvCallback getPin type error: type" + type);
                         }
                         Bundle param = new Bundle();
-                        param.putBoolean("isOnline", false);
+                        param.putBoolean("isOnline", isOnlinePin);
                         param.putString("pan", getpanData());//"6274311520010841"
                         param.putString("promptString", "Enter Card PIN");
                         param.putIntArray("pinLimit", new int[]{0, 4, 6});
@@ -299,7 +299,8 @@ public class SunyardReadCard {
 
                     KSNUtilities ksnUtilitites = new KSNUtilities();
                     String workingKey = ksnUtilitites.getWorkingKey("3F2216D8297BCE9C",getInitialKSN()) ;
-                    String pinBlock =  ksnUtilitites.DesEncryptDukpt(workingKey , getpanData(),cardPin);
+                    Log.d("Trying Something",workingKey + " " + getpanData()+ " " + cardPin);
+                    String pinBlock =  ksnUtilitites.DesEncryptDukpt(workingKey , getpanData(), "2529");
                     cardDataMap.put("CardPin",pinBlock);
                     cardDataMap.put("ksn",ksnUtilitites.getLatestKsn());
                     cardDataMap.put("pan",panNumber);
