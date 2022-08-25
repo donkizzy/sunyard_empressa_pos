@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  EmpressaPos.initializeMPos();
-  //EmpressaPos.initializeTerminal();
+ // EmpressaPos.initializeMPos();
+  EmpressaPos.initializeTerminal();
   runApp(MyApp());
 }
 
@@ -23,26 +23,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+
     super.initState();
 
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<List<BluetoothDevices> > searchForDevices() async {
-
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      bluetoothDevices = await EmpressaPos.startMPosDiscovery();
-      setState(() {
-
-      });
-      //platformVersion = await EmpressaPos.search(200);
-    } on PlatformException  catch (e) {
-
-      print(e);
-    }
-    return bluetoothDevices ;
-  }
 
   Future<bool> connectDevices({String bluetoothName,String bluetoothMac}) async {
 
@@ -69,13 +54,7 @@ class _MyAppState extends State<MyApp> {
           children: [
 
             RaisedButton(onPressed: (){
-              searchForDevices();
-            },
-              child: Text('Search Card'),
-
-            ),
-            RaisedButton(onPressed: (){
-              searchForDevices();
+              EmpressaPos.startPinInputTest();
             },
               child: Text('Search Card'),
 

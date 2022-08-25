@@ -34,7 +34,7 @@ public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, Acti
     private MethodChannel channel;
     SunyardReadCard sunyardReadCard;
     private Context mContext;
-    MPosApplication mPosApplication ;
+    MPosApplication mPosApplication;
     MPosDeviceConnect mPosDeviceConnect;
 
     @Override
@@ -68,11 +68,14 @@ public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, Acti
             case "checkSunyardCard":
                 sunyardReadCard.checkCard(result);
                 break;
-                case "initializeMPos":
-                  mPosApplication.initializeMPos(mContext) ;
+            case "testStartPinInput":
+                sunyardReadCard.startPinInputTest();
+                break;
+            case "initializeMPos":
+                mPosApplication.initializeMPos(mContext);
                 break;
             case "connectMPos":
-                mPosDeviceConnect.connectDevice(call.argument("bluetoothName"), call.argument("bluetoothMac"),result,mContext);
+                mPosDeviceConnect.connectDevice(call.argument("bluetoothName"), call.argument("bluetoothMac"), result, mContext);
                 break;
             case "startMPosDiscovery":
                 mPosDeviceConnect.startDiscovery(result);
@@ -103,8 +106,8 @@ public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, Acti
         // TODO: your plugin is now attached to an Activity
         Activity activity = binding.getActivity();
         mContext = binding.getActivity().getApplicationContext();
-        mPosApplication = new  MPosApplication();
-        mPosApplication.initializeMPos(mContext) ;
+        mPosApplication = new MPosApplication();
+        mPosApplication.initializeMPos(mContext);
         mPosDeviceConnect = new MPosDeviceConnect(activity);
 
 
