@@ -18,44 +18,37 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<BluetoothDevices> bluetoothDevices ;
-  bool connectionResult ;
+  List<BluetoothDevices> bluetoothDevices;
+  bool connectionResult;
 
   @override
   void initState() {
     super.initState();
-
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<List<BluetoothDevices> > searchForDevices() async {
-
+  Future<List<BluetoothDevices>> searchForDevices() async {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       bluetoothDevices = await EmpressaPos.startMPosDiscovery();
-      setState(() {
-
-      });
+      setState(() {});
       //platformVersion = await EmpressaPos.search(200);
-    } on PlatformException  catch (e) {
-
+    } on PlatformException catch (e) {
       print(e);
     }
-    return bluetoothDevices ;
+    return bluetoothDevices;
   }
 
-  Future<bool> connectDevices({String bluetoothName,String bluetoothMac}) async {
-
+  Future<bool> connectDevices(
+      {String bluetoothName, String bluetoothMac}) async {
     try {
-
-     connectionResult =  await EmpressaPos.connectMPosDevice(bluetoothMac: bluetoothMac,bluetoothName: bluetoothName);
-     setState(() {
-
-     });
-    } on PlatformException  catch (e) {
+      connectionResult = await EmpressaPos.connectMPosDevice(
+          bluetoothMac: bluetoothMac, bluetoothName: bluetoothName);
+      setState(() {});
+    } on PlatformException catch (e) {
       print(e);
     }
-    return connectionResult ;
+    return connectionResult;
   }
 
   @override
@@ -67,33 +60,44 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-
-            RaisedButton(onPressed: (){
-              searchForDevices();
-            },
+            TextButton(
+              onPressed: () {
+                searchForDevices();
+              },
               child: Text('Search Card'),
-
             ),
-            RaisedButton(onPressed: (){
-              searchForDevices();
-            },
+            TextButton(
+              onPressed: () {
+                searchForDevices();
+              },
               child: Text('Search Card'),
-
             ),
-            SizedBox(height: 20,),
-            Expanded(child: ListView.separated(
+            SizedBox(
+              height: 20,
+            ),
+            Expanded(
+                child: ListView.separated(
               shrinkWrap: true,
-              itemCount:  bluetoothDevices == null ? 0 :bluetoothDevices.length,
+              itemCount: bluetoothDevices == null ? 0 : bluetoothDevices.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
-                  onTap: (){
-                    connectDevices(bluetoothName: bluetoothDevices[index].name,bluetoothMac: bluetoothDevices[index].address);
-                  },
-                    child: Text('${bluetoothDevices[index].name + bluetoothDevices[index].address}'));
-              }, separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 20,);
-            },)),
-            Text(connectionResult == true ? 'Connected' : 'I NO Fit CONNECT' + '$connectionResult')
+                    onTap: () {
+                      connectDevices(
+                          bluetoothName: bluetoothDevices[index].name,
+                          bluetoothMac: bluetoothDevices[index].address);
+                    },
+                    child: Text(
+                        '${bluetoothDevices[index].name + bluetoothDevices[index].address}'));
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: 20,
+                );
+              },
+            )),
+            Text(connectionResult == true
+                ? 'Connected'
+                : 'I NO Fit CONNECT' + '$connectionResult')
           ],
         ),
       ),
