@@ -77,6 +77,7 @@ public class SunyardPrinter {
         printText(call, "expiryDate", "Card Expiry");
         printText(call, "terminalId", "TerminalID");
         printText(call, "merchantId", "MerchantID");
+        printText(call, "reason", "Reason");
         printText(call, "agent", "Agent");
         printText(call, "time", "Time");
         printText(call, "transmissionDate", "Date");
