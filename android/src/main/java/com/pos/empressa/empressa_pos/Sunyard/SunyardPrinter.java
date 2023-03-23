@@ -67,6 +67,9 @@ public class SunyardPrinter {
         printText(call, "qty", "Qty");
         printText(call, "packageName", "Package Name");
         printText(call, "customerName", "Customer Name");
+        printText(call, "senderAccountName", "Sender Account");
+        printText(call, "senderBankName", "Sender Bank");
+        printText(call, "senderAccountNumber", "Sender Account Number");
         printText(call, "customerId", "Customer Id");
         printText(call, "customerReference", "Customer Reference");
         printText(call, "transactionFee", "Transaction Fee");
