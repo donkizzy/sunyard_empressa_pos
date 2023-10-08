@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
- // EmpressaPos.initializeMPos();
+  // EmpressaPos.initializeMPos();
   EmpressaPos.initializeTerminal();
   runApp(MyApp());
 }
@@ -18,29 +18,24 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<BluetoothDevices> bluetoothDevices ;
-  bool connectionResult ;
+  List<BluetoothDevices> bluetoothDevices;
+  bool connectionResult;
 
   @override
   void initState() {
-
     super.initState();
-
   }
 
-
-  Future<bool> connectDevices({String bluetoothName,String bluetoothMac}) async {
-
+  Future<bool> connectDevices(
+      {String bluetoothName, String bluetoothMac}) async {
     try {
-
-     connectionResult =  await EmpressaPos.connectMPosDevice(bluetoothMac: bluetoothMac,bluetoothName: bluetoothName);
-     setState(() {
-
-     });
-    } on PlatformException  catch (e) {
+      connectionResult = await EmpressaPos.connectMPosDevice(
+          bluetoothMac: bluetoothMac, bluetoothName: bluetoothName);
+      setState(() {});
+    } on PlatformException catch (e) {
       print(e);
     }
-    return connectionResult ;
+    return connectionResult;
   }
 
   @override
@@ -52,27 +47,38 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-
-            RaisedButton(onPressed: (){
-              EmpressaPos.startPinInputTest();
-            },
+            TextButton(
+              onPressed: () {
+                EmpressaPos.startPinInputTest();
+              },
               child: Text('Search Card'),
-
             ),
-            SizedBox(height: 20,),
-            Expanded(child: ListView.separated(
+            SizedBox(
+              height: 20,
+            ),
+            Expanded(
+                child: ListView.separated(
               shrinkWrap: true,
-              itemCount:  bluetoothDevices == null ? 0 :bluetoothDevices.length,
+              itemCount: bluetoothDevices == null ? 0 : bluetoothDevices.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
-                  onTap: (){
-                    connectDevices(bluetoothName: bluetoothDevices[index].name,bluetoothMac: bluetoothDevices[index].address);
-                  },
-                    child: Text('${bluetoothDevices[index].name + bluetoothDevices[index].address}'));
-              }, separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 20,);
-            },)),
-            Text(connectionResult == true ? 'Connected' : 'I NO Fit CONNECT' + '$connectionResult')
+                    onTap: () {
+                      connectDevices(
+                          bluetoothName: bluetoothDevices[index].name,
+                          bluetoothMac: bluetoothDevices[index].address);
+                    },
+                    child: Text(
+                        '${bluetoothDevices[index].name + bluetoothDevices[index].address}'));
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: 20,
+                );
+              },
+            )),
+            Text(connectionResult == true
+                ? 'Connected'
+                : 'I NO Fit CONNECT' + '$connectionResult')
           ],
         ),
       ),

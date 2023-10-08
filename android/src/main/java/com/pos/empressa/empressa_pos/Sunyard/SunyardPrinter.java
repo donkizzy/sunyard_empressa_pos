@@ -45,7 +45,7 @@ public class SunyardPrinter {
         print.appendTextEntity2(
                 new TextEntity("Transaction Receipt\n", mCh, mEn, FontLattice.THIRTY, false, Align.CENTER, true));
         print.appendTextEntity2(print.getSeparatorLinetEntity());
-        print.appendTextEntity2(new TextEntity("AMOUNT: NGN" + call.argument("originalMinorAmount").toString() + "\n",
+        print.appendTextEntity2(new TextEntity("NGN" + call.argument("originalMinorAmount").toString() + "\n",
                 mCh, mEn, FontLattice.THIRTY, false, Align.CENTER, true));
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         printText(call, "merchantName", "Merchant Name");
@@ -77,18 +77,16 @@ public class SunyardPrinter {
         printText(call, "expiryDate", "Card Expiry");
         printText(call, "terminalId", "TerminalID");
         printText(call, "merchantId", "MerchantID");
+        printText(call, "reason", "Reason");
         printText(call, "agent", "Agent");
         printText(call, "time", "Time");
         printText(call, "transmissionDate", "Date");
+
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         print.appendTextEntity2(new TextEntity(call.argument("transactionComment") + "\n", mCh, mEn,
                 FontLattice.THIRTY, false, Align.CENTER, true));
         printFooter(call, "footer");
-        print.appendTextEntity2(new TextEntity( "\n", mCh, mEn,
-                FontLattice.THIRTY, false, Align.CENTER, true));
-        print.appendTextEntity2(new TextEntity( "\n", mCh, mEn,
-                FontLattice.THIRTY, false, Align.CENTER, true));
-        print.appendTextEntity2(new TextEntity( "\n", mCh, mEn,
+        print.appendTextEntity2(new TextEntity("\n", mCh, mEn,
                 FontLattice.THIRTY, false, Align.CENTER, true));
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         print.limitTimePrint(10, print.getPrintBuffer());
@@ -104,11 +102,11 @@ public class SunyardPrinter {
 
     private void printFooter(@NonNull MethodCall call, String key) {
         if (call.argument(key) != null) {
-            print.appendTextEntity2(new TextEntity(call.argument(key) + "\n\n\n\n" , mCh, mEn,
+            print.appendTextEntity2(new TextEntity(call.argument(key) + "\n\n\n\n", mCh, mEn,
                     FontLattice.TWENTY, false, Align.CENTER, true));
         } else {
-            print.appendTextEntity2(new TextEntity("Built on Fizido, Powered by Support MFB" + "\n\n\n\n" ,
-                    mCh, mEn, FontLattice.TWENTY, false, Align.CENTER,true));
+            print.appendTextEntity2(new TextEntity("Built on Fizido, Powered by Support MFB" + "\n\n\n\n",
+                    mCh, mEn, FontLattice.TWENTY, false, Align.CENTER, true));
         }
     }
 }
