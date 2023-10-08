@@ -81,6 +81,7 @@ public class SunyardPrinter {
         printText(call, "agent", "Agent");
         printText(call, "time", "Time");
         printText(call, "transmissionDate", "Date");
+
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         print.appendTextEntity2(new TextEntity(call.argument("transactionComment") + "\n", mCh, mEn,
                 FontLattice.THIRTY, false, Align.CENTER, true));
