@@ -183,7 +183,8 @@ public class SunyardReadCard {
                             Log.d("EmpressaPosPlugin", "EMVDevice SyncEmvCallback getPin type error: type" + type);
                         }
                         Bundle param = new Bundle();
-                        param.putBoolean("isOnline", isOnlinePin);
+
+                        param.putBoolean("isOnline", false);
                         param.putString("pan", getpanData());//"6274311520010841"
                         param.putString("promptString", "Enter Card PIN");
                         param.putIntArray("pinLimit", new int[]{0, 4, 6});
@@ -300,7 +301,7 @@ public class SunyardReadCard {
                     KSNUtilities ksnUtilitites = new KSNUtilities();
                     String workingKey = ksnUtilitites.getWorkingKey("3F2216D8297BCE9C",getInitialKSN()) ;
                     Log.d("Trying Something",workingKey + " " + getpanData()+ " " + cardPin);
-                    String pinBlock =  ksnUtilitites.DesEncryptDukpt(workingKey , getpanData(), "2529");
+                    String pinBlock =  ksnUtilitites.DesEncryptDukpt(workingKey , getpanData(), cardPin);
                     cardDataMap.put("CardPin",pinBlock);
                     cardDataMap.put("ksn",ksnUtilitites.getLatestKsn());
                     cardDataMap.put("pan",panNumber);
@@ -339,12 +340,19 @@ public class SunyardReadCard {
 
     private void getClearPin(byte[] data) {
         String pinHex =  HexUtil.toString(data) ;
-        String[] pinArray = pinHex.split("3");
-
-        for (int i=0; i < pinArray.length; i++)
+        char[] ary = pinHex.toCharArray();
+        StringBuilder cardPins = new StringBuilder();
+        for (int i = 0; i < ary.length; i++)
         {
-            cardPin = cardPin + pinArray[i] ;
+            if (i % 2 == 1)
+            {
+                cardPins.append(ary[i]);
+            }
         }
+
+        String result =  cardPins.toString();
+        cardPin = result;
+        android.util.Log.d("card result",result);
     }
 
     private void readcard( @NonNull MethodChannel.Result result) {
@@ -420,7 +428,7 @@ public class SunyardReadCard {
                     @Override
                     public void run() {
                         Bundle param = new Bundle();
-                        param.putBoolean("isOnline", finalIsOnlinePin);
+                        param.putBoolean("isOnline", false);
                         param.putString("pan", getpanData());//"6274311520010841"
                         param.putString("promptString", "Enter Card PIN");
                         param.putIntArray("pinLimit", new int[]{4, 6});
@@ -835,4 +843,56 @@ public class SunyardReadCard {
       result.success(isCardInserted);
     }
 
+
+ public void startPinInputTest()  {
+    try{
+        Bundle param = new Bundle();
+        param.putBoolean("isOnline", false);
+        param.putString("pan", "4105400011246129");//"6274311520010841"
+        param.putString("promptString", "Enter Card PIN");
+        param.putIntArray("pinLimit", new int[]{4, 6});
+        param.putInt("pinAlgMode", Ped.DES_TYPE_DES);//ALGORITHMTYPE_USE_PAN_SUPPLY_F
+        param.putInt("keysType", Ped.DES_TYPE_DES);//KEYS_TYPE_DUKPT
+        param.putInt("desType",Ped.DES_TYPE_DES);
+        param.putInt("timeout", 60);
+        Ped.getInstance().startPinInput(mContext, 0x01, param, new OperationPinListener() {
+
+            @Override
+            public void onInput(int len, int key) {
+                Log.e("EmpressaPosPlugin", "onInput  len:" + len + "  key:" + key);
+            }
+
+            @Override
+            public void onError(int errorCode) {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //  result.error("1-0-3","onError   errorCode:",errorCode);
+                    }
+                });
+
+
+                Log.e("EmpressaPosPlugin", "onError   errorCode:" + errorCode);
+                //getPinHandler.onGetPin(EmvCallbackGetPinResult.CV_PIN_FAIL, null);
+            }
+
+            @Override
+            public void onConfirm(byte[] data, boolean isNonePin) {
+                getClearPin(data);
+                // getPinHandler.onGetPin(EmvCallbackGetPinResult.CV_PIN_SUCC, data);
+                Log.e("EmpressaPosPlugin", "onConfirm   data:"  + "  isNonePin:" + isNonePin);
+            }
+
+            @Override
+            public void onCancel() {
+                stopSearch();
+                initEmv();
+                Log.e("EmpressaPosPlugin", "onCancel");
+                //getPinHandler.onGetPin(EmvCallbackGetPinResult.CV_PIN_CANCLE, new byte[]{0x00, 0x00});
+            }
+        });
+    }catch (SDKException e){
+        e.printStackTrace();
+    }
+ }
 }

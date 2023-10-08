@@ -75,6 +75,15 @@ class EmpressaPos {
     }
   }
 
+  static Future<void> startPinInputTest() async {
+    var result ;
+    try {
+      result  = await _channel.invokeMethod('testStartPinInput');
+    } catch (e) {
+      print(e);
+    }
+  }
+
   static Future<List<BluetoothDevices>?> startMPosDiscovery() async {
     var result;
     List<BluetoothDevices>? bluetoothDevices;
