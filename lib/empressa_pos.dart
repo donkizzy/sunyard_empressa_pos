@@ -56,6 +56,16 @@ class EmpressaPos {
     }
   }
 
+  static Future<void> sunyardPrintSummary(
+      Map<String, dynamic> printerDetails) async {
+    try {
+      var result =
+          await _channel.invokeMethod('startSummaryPrinter', printerDetails);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   static Future<bool?> checkCard() async {
     var result;
     try {
@@ -76,9 +86,9 @@ class EmpressaPos {
   }
 
   static Future<void> startPinInputTest() async {
-    var result ;
+    var result;
     try {
-      result  = await _channel.invokeMethod('testStartPinInput');
+      result = await _channel.invokeMethod('testStartPinInput');
     } catch (e) {
       print(e);
     }

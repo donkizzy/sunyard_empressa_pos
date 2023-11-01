@@ -2,10 +2,8 @@ package com.pos.empressa.empressa_pos;
 
 import androidx.annotation.NonNull;
 
-
 import android.app.Activity;
 import android.content.Context;
-
 
 import com.pos.empressa.empressa_pos.MPos.MPosDeviceConnect;
 import com.pos.empressa.empressa_pos.MPos.MPosApplication;
@@ -27,9 +25,11 @@ import io.flutter.plugin.common.MethodChannel.Result;
  * EmpressaPosPlugin
  */
 public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
-    /// The MethodChannel that will the communication between Flutter and native Android
+    /// The MethodChannel that will the communication between Flutter and native
+    /// Android
     ///
-    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
+    /// This local reference serves to register the plugin with the Flutter Engine
+    /// and unregister it
     /// when the Flutter Engine is detached from the Activity
     private MethodChannel channel;
     SunyardReadCard sunyardReadCard;
@@ -48,7 +48,6 @@ public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, Acti
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         sunyardReadCard = new SunyardReadCard(mContext);
 
-
         switch (call.method) {
             case "searchCard":
                 sunyardReadCard.searchCard(result, call.argument("transactionAmount"));
@@ -65,6 +64,12 @@ public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, Acti
                 Log.d("PrintActivity.class", call.arguments.toString());
                 sunyardPrinter.startPrint(call);
                 break;
+            case "startSummaryPrinter":
+                if (nexgoPrinter == null) {
+                    nexgoPrinter = new NexgoPrinter(mContext);
+                }
+                nexgoPrinter.printTransactionSummary(call);
+                break;
             case "checkSunyardCard":
                 sunyardReadCard.checkCard(result);
                 break;
@@ -75,7 +80,8 @@ public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, Acti
                 mPosApplication.initializeMPos(mContext);
                 break;
             case "connectMPos":
-                mPosDeviceConnect.connectDevice(call.argument("bluetoothName"), call.argument("bluetoothMac"), result, mContext);
+                mPosDeviceConnect.connectDevice(call.argument("bluetoothName"), call.argument("bluetoothMac"), result,
+                        mContext);
                 break;
             case "startMPosDiscovery":
                 mPosDeviceConnect.startDiscovery(result);
@@ -100,7 +106,6 @@ public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, Acti
         channel.setMethodCallHandler(null);
     }
 
-
     @Override
     public void onAttachedToActivity(@NonNull @org.jetbrains.annotations.NotNull ActivityPluginBinding binding) {
         // TODO: your plugin is now attached to an Activity
@@ -110,25 +115,28 @@ public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, Acti
         mPosApplication.initializeMPos(mContext);
         mPosDeviceConnect = new MPosDeviceConnect(activity);
 
-
     }
 
     @Override
     public void onDetachedFromActivityForConfigChanges() {
-        // TODO: the Activity your plugin was attached to was destroyed to change configuration.
+        // TODO: the Activity your plugin was attached to was destroyed to change
+        // configuration.
         // This call will be followed by onReattachedToActivityForConfigChanges().
     }
 
     @Override
-    public void onReattachedToActivityForConfigChanges(@NonNull @org.jetbrains.annotations.NotNull ActivityPluginBinding binding) {
-        // TODO: your plugin is now attached to a new Activity after a configuration change.
+    public void onReattachedToActivityForConfigChanges(
+            @NonNull @org.jetbrains.annotations.NotNull ActivityPluginBinding binding) {
+        // TODO: your plugin is now attached to a new Activity after a configuration
+        // change.
 
     }
 
     @Override
     public void onDetachedFromActivity() {
         sunyardReadCard.stopSearch();
-        // TODO: your plugin is no longer associated with an Activity. Clean up references.
+        // TODO: your plugin is no longer associated with an Activity. Clean up
+        // references.
 
     }
 
