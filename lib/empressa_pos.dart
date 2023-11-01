@@ -34,7 +34,7 @@ class EmpressaPos {
 
   static Future<void> initializeTerminal() async {
     try {
-      var result = await _channel.invokeMethod('initEmv');
+      await _channel.invokeMethod('initEmv');
     } catch (e) {
       print(e);
     }
@@ -42,7 +42,7 @@ class EmpressaPos {
 
   static Future<void> stopSearch() async {
     try {
-      var result = await _channel.invokeMethod('stopSearch');
+      await _channel.invokeMethod('stopSearch');
     } catch (e) {
       print(e);
     }
@@ -50,7 +50,7 @@ class EmpressaPos {
 
   static Future<void> sunyardPrint(Map<String, dynamic> printerDetails) async {
     try {
-      var result = await _channel.invokeMethod('startPrinter', printerDetails);
+      await _channel.invokeMethod('startPrinter', printerDetails);
     } catch (e) {
       print(e);
     }
@@ -59,8 +59,7 @@ class EmpressaPos {
   static Future<void> sunyardPrintSummary(
       Map<String, dynamic> printerDetails) async {
     try {
-      var result =
-          await _channel.invokeMethod('startSummaryPrinter', printerDetails);
+      await _channel.invokeMethod('startSummaryPrinter', printerDetails);
     } catch (e) {
       print(e);
     }
