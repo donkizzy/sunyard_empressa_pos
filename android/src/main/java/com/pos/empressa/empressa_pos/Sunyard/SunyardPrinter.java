@@ -94,28 +94,28 @@ public class SunyardPrinter {
     }
 
     public void printTransactionSummary(@NonNull MethodCall call) {
-        print.initPrinter();
-        print.setLetterSpacing(5);
-        print.appendPrnStr(call.argument("vendorName"), fontNormal, Align.CENTER);
-        print.appendPrnStr("Transaction Receipt", fontBig, Align.CENTER);
-        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
-        print.appendPrnStr("End of Day Report", fontNormal, Align.CENTER);
-        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
+        print.appendTextEntity2(new TextEntity(call.argument("vendorName") + "\n",
+                mCh, mEn, FontLattice.THIRTY, false, Align.CENTER, true));
+        print.appendTextEntity2(new TextEntity("Transaction Receipt" + "\n",
+                mCh, mEn, FontLattice.THIRTY, false, Align.CENTER, true));
+        print.appendTextEntity2(print.getSeparatorLinetEntity());
+        print.appendTextEntity2(new TextEntity("End of Day Report" + "\n",
+                mCh, mEn, FontLattice.THIRTY, false, Align.CENTER, true));
+        print.appendTextEntity2(print.getSeparatorLinetEntity());
         printText(call, "merchantName", "Merchant Name");
         printText(call, "merchantLocation", "Merchant Location");
         printText(call, "time", "Report Date");
-        printText(call, "totalTransactionAmount", "Total");
-        print.appendPrnStr("Total: NGN " + call.argument("totalTransactionAmount").toString(), fontNormal,
+        print.appendTextEntity2("Total: NGN " + call.argument("totalTransactionAmount").toString(), fontNormal,
                 Align.LEFT);
         printText(call, "totalTransactionCount", "Count");
-        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
-        print.appendPrnStr("Summary breakdown", fontNormal, Align.CENTER);
-        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
+        print.appendTextEntity2(print.getSeparatorLinetEntity());
+        print.appendTextEntity2("Summary breakdown", fontNormal, Align.CENTER);
+        print.appendTextEntity2(print.getSeparatorLinetEntity());
         printSummaryList(call, "summaryList");
-        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
+        print.appendTextEntity2(print.getSeparatorLinetEntity());
         printFooter(call, "footer");
         print.appendPrnStr("\n", fontNormal, Align.LEFT);
-        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
+        print.appendTextEntity2(print.getSeparatorLinetEntity());
         print.startPrint();
     }
 
@@ -131,10 +131,10 @@ public class SunyardPrinter {
             String transactionCount = transactionsParts[1];
             String transactionValue = transactionsParts[2];
 
-            print.appendPrnStr(transactionType, fontNormal, Align.LEFT);
-            print.appendPrnStr("Count: " + transactionCount + "\n", fontNormal,
+            print.appendTextEntity2(transactionType, fontNormal, Align.LEFT);
+            print.appendTextEntity2("Count: " + transactionCount + "\n", fontNormal,
                     Align.LEFT);
-            print.appendPrnStr("Value: " + "NGN " + transactionValue + "\n\n",
+            print.appendTextEntity2("Value: " + "NGN " + transactionValue + "\n\n",
                     fontNormal,
                     Align.LEFT);
 
@@ -150,7 +150,8 @@ public class SunyardPrinter {
     }
 
     private void printTitle(@NonNull MethodCall call, String key) {
-        print.appendPrnStr(call.argument(key), fontNormal, Align.LEFT);
+        print.appendTextEntity2(new TextEntity(call.argument(key) + "\n", mCh, mEn,
+                FontLattice.THIRTY, false, Align.LEFT, true));
     }
 
     private void printFooter(@NonNull MethodCall call, String key) {
