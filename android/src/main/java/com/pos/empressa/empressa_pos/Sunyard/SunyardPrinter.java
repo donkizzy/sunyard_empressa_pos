@@ -93,11 +93,68 @@ public class SunyardPrinter {
         print.startPrint();
     }
 
+    public void printTransactionSummary(@NonNull MethodCall call) {
+        printer.initPrinter();
+        printer.setLetterSpacing(5);
+        printer.appendPrnStr(call.argument("vendorName"), fontNormal, AlignEnum.CENTER);
+        printer.appendPrnStr("Transaction Receipt", fontBig, AlignEnum.CENTER);
+        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
+        printer.appendPrnStr("End of Day Report", fontNormal, AlignEnum.CENTER);
+        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
+        printText(call, "merchantName", "Merchant Name");
+        printText(call, "merchantLocation", "Merchant Location");
+        printText(call, "time", "Report Date");
+        printText(call, "totalTransactionAmount", "Total");
+        printer.appendPrnStr("Total: NGN " + call.argument("totalTransactionAmount").toString(), fontNormal,
+                AlignEnum.LEFT);
+        printText(call, "totalTransactionCount", "Count");
+        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
+        printer.appendPrnStr("Summary breakdown", fontNormal, AlignEnum.CENTER);
+        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
+        printSummaryList(call, "summaryList");
+        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
+        printFooter(call, "footer");
+        printer.appendPrnStr("\n", fontNormal, AlignEnum.LEFT);
+        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
+        printer.startPrint(true, new OnPrintListener() {
+            @Override
+            public void onPrintResult(final int retCode) {
+            }
+        });
+    }
+
+    private void printSummaryList(@NonNull MethodCall call, String key) {
+        // ["type1,count1,200", "type2,count3,500"]
+
+        ArrayList<String> transactions = call.argument(key);
+
+        for (String transaction : transactions) {
+            String[] transactionsParts = transaction.split(",");
+
+            String transactionType = transactionsParts[0];
+            String transactionCount = transactionsParts[1];
+            String transactionValue = transactionsParts[2];
+
+            printer.appendPrnStr(transactionType, fontNormal, AlignEnum.LEFT);
+            printer.appendPrnStr("Count: " + transactionCount + "\n", fontNormal,
+                    AlignEnum.LEFT);
+            printer.appendPrnStr("Value: " + "NGN " + transactionValue + "\n\n",
+                    fontNormal,
+                    AlignEnum.LEFT);
+
+        }
+
+    }
+
     private void printText(@NonNull MethodCall call, String key, String title) {
         if (call.argument(key) != null) {
             print.appendTextEntity2(new TextEntity(title + ": " + call.argument(key) + "\n", mCh, mEn,
                     FontLattice.TWENTY_FOUR, false, Align.LEFT, true));
         }
+    }
+
+    private void printTitle(@NonNull MethodCall call, String key) {
+        printer.appendPrnStr(call.argument(key), fontNormal, AlignEnum.LEFT);
     }
 
     private void printFooter(@NonNull MethodCall call, String key) {
