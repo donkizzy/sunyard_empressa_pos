@@ -102,7 +102,7 @@ public class SunyardPrinter {
                 print.appendTextEntity2(new TextEntity("Transaction Receipt" + "\n",
                                 mCh, mEn, FontLattice.THIRTY, false, Align.CENTER, true));
                 print.appendTextEntity2(print.getSeparatorLinetEntity());
-                print.appendTextEntity2(new TextEntity("End of Day Report" + "\n",
+                print.appendTextEntity2(new TextEntity("End of Day Report",
                                 mCh, mEn, FontLattice.THIRTY, false, Align.CENTER, true));
                 print.appendTextEntity2(print.getSeparatorLinetEntity());
                 printText(call, "merchantName", "Merchant Name");
@@ -114,7 +114,7 @@ public class SunyardPrinter {
                                                 FontLattice.TWENTY_FOUR, false, Align.LEFT, true));
                 printText(call, "totalTransactionCount", "Count");
                 print.appendTextEntity2(print.getSeparatorLinetEntity());
-                print.appendTextEntity2(new TextEntity("Summary breakdown" + "\n", mCh, mEn,
+                print.appendTextEntity2(new TextEntity("Summary breakdown", mCh, mEn,
                                 FontLattice.THIRTY, false, Align.CENTER, true));
                 print.appendTextEntity2(print.getSeparatorLinetEntity());
                 printSummaryList(call, "summaryList");
@@ -146,7 +146,7 @@ public class SunyardPrinter {
                                         new TextEntity("Count: " + transactionCount + "\n", mCh, mEn,
                                                         FontLattice.TWENTY_FOUR, false, Align.LEFT, true));
                         print.appendTextEntity2(
-                                        new TextEntity("Value: " + transactionValue + "\n", mCh, mEn,
+                                        new TextEntity("Value: NGN " + transactionValue + "\n", mCh, mEn,
                                                         FontLattice.TWENTY_FOUR, false, Align.LEFT, true));
                 }
 
