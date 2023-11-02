@@ -105,17 +105,21 @@ public class SunyardPrinter {
         printText(call, "merchantName", "Merchant Name");
         printText(call, "merchantLocation", "Merchant Location");
         printText(call, "time", "Report Date");
-        print.appendTextEntity2("Total: NGN " + call.argument("totalTransactionAmount").toString(), fontNormal,
-                Align.LEFT);
+        print.appendTextEntity2(
+                new TextEntity("Total: NGN " + call.argument("totalTransactionAmount").toString() + "\n", mCh, mEn,
+                        FontLattice.TWENTY_FOUR, false, Align.LEFT, true));
         printText(call, "totalTransactionCount", "Count");
         print.appendTextEntity2(print.getSeparatorLinetEntity());
-        print.appendTextEntity2("Summary breakdown", fontNormal, Align.CENTER);
+        print.appendTextEntity2(new TextEntity("Summary breakdown" + "\n", mCh, mEn,
+                FontLattice.THIRTY, false, Align.CENTER, true));
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         printSummaryList(call, "summaryList");
         print.appendTextEntity2(print.getSeparatorLinetEntity());
         printFooter(call, "footer");
-        print.appendPrnStr("\n", fontNormal, Align.LEFT);
+        print.appendTextEntity2(new TextEntity("\n", mCh, mEn,
+                FontLattice.THIRTY, false, Align.CENTER, true));
         print.appendTextEntity2(print.getSeparatorLinetEntity());
+        print.limitTimePrint(10, print.getPrintBuffer());
         print.startPrint();
     }
 
@@ -131,32 +135,29 @@ public class SunyardPrinter {
             String transactionCount = transactionsParts[1];
             String transactionValue = transactionsParts[2];
 
-            print.appendTextEntity2(transactionType, fontNormal, Align.LEFT);
-            print.appendTextEntity2("Count: " + transactionCount + "\n", fontNormal,
-                    Align.LEFT);
-            print.appendTextEntity2("Value: " + "NGN " + transactionValue + "\n\n",
-                    fontNormal,
-                    Align.LEFT);
-
+            print.appendTextEntity2(
+                    new TextEntity(transactionType + "\n", mCh, mEn,
+                            FontLattice.TWENTY_FOUR, false, Align.LEFT, true));
+            print.appendTextEntity2(
+                    new TextEntity("Count: " + transactionCount + "\n", mCh, mEn,
+                            FontLattice.TWENTY_FOUR, false, Align.LEFT, true));
+            print.appendTextEntity2(
+                    new TextEntity("Value: " + transactionValue + "\n", mCh, mEn,
+                            FontLattice.TWENTY_FOUR, false, Align.LEFT, true));
         }
 
     }
 
     private void printText(@NonNull MethodCall call, String key, String title) {
         if (call.argument(key) != null) {
-            print.appendTextEntity2(new TextEntity(title + ": " + call.argument(key) + "\n", mCh, mEn,
+            print.appendTextEntity2(new TextEntity(title + ": " + call.argument(key).toString() + "\n", mCh, mEn,
                     FontLattice.TWENTY_FOUR, false, Align.LEFT, true));
         }
     }
 
-    private void printTitle(@NonNull MethodCall call, String key) {
-        print.appendTextEntity2(new TextEntity(call.argument(key) + "\n", mCh, mEn,
-                FontLattice.THIRTY, false, Align.LEFT, true));
-    }
-
     private void printFooter(@NonNull MethodCall call, String key) {
         if (call.argument(key) != null) {
-            print.appendTextEntity2(new TextEntity(call.argument(key) + "\n\n\n\n", mCh, mEn,
+            print.appendTextEntity2(new TextEntity(call.argument(key).toString() + "\n\n\n\n", mCh, mEn,
                     FontLattice.TWENTY, false, Align.CENTER, true));
         } else {
             print.appendTextEntity2(new TextEntity("Built on Fizido, Powered by Support MFB" + "\n\n\n\n",
