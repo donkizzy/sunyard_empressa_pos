@@ -47,6 +47,7 @@ public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, Acti
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         sunyardReadCard = new SunyardReadCard(mContext);
+        SunyardPrinter sunyardPrinter = new SunyardPrinter(mContext);
 
         switch (call.method) {
             case "searchCard":
@@ -60,15 +61,10 @@ public class EmpressaPosPlugin implements FlutterPlugin, MethodCallHandler, Acti
                 sunyardApplication.initializeApp(mContext);
                 break;
             case "startPrinter":
-                SunyardPrinter sunyardPrinter = new SunyardPrinter(mContext);
-                Log.d("PrintActivity.class", call.arguments.toString());
                 sunyardPrinter.startPrint(call);
                 break;
             case "startSummaryPrinter":
-                if (nexgoPrinter == null) {
-                    nexgoPrinter = new NexgoPrinter(mContext);
-                }
-                nexgoPrinter.printTransactionSummary(call);
+                sunyardPrinter.printTransactionSummary(call);
                 break;
             case "checkSunyardCard":
                 sunyardReadCard.checkCard(result);
