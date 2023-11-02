@@ -94,33 +94,29 @@ public class SunyardPrinter {
     }
 
     public void printTransactionSummary(@NonNull MethodCall call) {
-        printer.initPrinter();
-        printer.setLetterSpacing(5);
-        printer.appendPrnStr(call.argument("vendorName"), fontNormal, AlignEnum.CENTER);
-        printer.appendPrnStr("Transaction Receipt", fontBig, AlignEnum.CENTER);
-        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
-        printer.appendPrnStr("End of Day Report", fontNormal, AlignEnum.CENTER);
-        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
+        print.initPrinter();
+        print.setLetterSpacing(5);
+        print.appendPrnStr(call.argument("vendorName"), fontNormal, Align.CENTER);
+        print.appendPrnStr("Transaction Receipt", fontBig, Align.CENTER);
+        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
+        print.appendPrnStr("End of Day Report", fontNormal, Align.CENTER);
+        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
         printText(call, "merchantName", "Merchant Name");
         printText(call, "merchantLocation", "Merchant Location");
         printText(call, "time", "Report Date");
         printText(call, "totalTransactionAmount", "Total");
-        printer.appendPrnStr("Total: NGN " + call.argument("totalTransactionAmount").toString(), fontNormal,
-                AlignEnum.LEFT);
+        print.appendPrnStr("Total: NGN " + call.argument("totalTransactionAmount").toString(), fontNormal,
+                Align.LEFT);
         printText(call, "totalTransactionCount", "Count");
-        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
-        printer.appendPrnStr("Summary breakdown", fontNormal, AlignEnum.CENTER);
-        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
+        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
+        print.appendPrnStr("Summary breakdown", fontNormal, Align.CENTER);
+        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
         printSummaryList(call, "summaryList");
-        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
+        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
         printFooter(call, "footer");
-        printer.appendPrnStr("\n", fontNormal, AlignEnum.LEFT);
-        printer.appendPrnStr("--------------------------------", fontNormal, AlignEnum.CENTER);
-        printer.startPrint(true, new OnPrintListener() {
-            @Override
-            public void onPrintResult(final int retCode) {
-            }
-        });
+        print.appendPrnStr("\n", fontNormal, Align.LEFT);
+        print.appendPrnStr("--------------------------------", fontNormal, Align.CENTER);
+        print.startPrint();
     }
 
     private void printSummaryList(@NonNull MethodCall call, String key) {
@@ -135,12 +131,12 @@ public class SunyardPrinter {
             String transactionCount = transactionsParts[1];
             String transactionValue = transactionsParts[2];
 
-            printer.appendPrnStr(transactionType, fontNormal, AlignEnum.LEFT);
-            printer.appendPrnStr("Count: " + transactionCount + "\n", fontNormal,
-                    AlignEnum.LEFT);
-            printer.appendPrnStr("Value: " + "NGN " + transactionValue + "\n\n",
+            print.appendPrnStr(transactionType, fontNormal, Align.LEFT);
+            print.appendPrnStr("Count: " + transactionCount + "\n", fontNormal,
+                    Align.LEFT);
+            print.appendPrnStr("Value: " + "NGN " + transactionValue + "\n\n",
                     fontNormal,
-                    AlignEnum.LEFT);
+                    Align.LEFT);
 
         }
 
@@ -154,7 +150,7 @@ public class SunyardPrinter {
     }
 
     private void printTitle(@NonNull MethodCall call, String key) {
-        printer.appendPrnStr(call.argument(key), fontNormal, AlignEnum.LEFT);
+        print.appendPrnStr(call.argument(key), fontNormal, Align.LEFT);
     }
 
     private void printFooter(@NonNull MethodCall call, String key) {
