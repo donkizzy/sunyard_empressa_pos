@@ -63,6 +63,7 @@ public class SunyardPrinter {
                 printText(call, "bankName", "Bank Name");
                 printText(call, "merchant", "Merchant");
                 printText(call, "accountNumber", "Account Number");
+                printText(call, "pumpNo", "Pump number");
                 printText(call, "description", "Description");
                 printText(call, "bill", "Bill");
                 printText(call, "paymentItem", "Payment Item");
