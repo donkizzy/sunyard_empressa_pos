@@ -47,6 +47,7 @@ public class SunyardPrinter {
                 print.appendTextEntity2(
                                 new TextEntity("Transaction Receipt\n", mCh, mEn, FontLattice.THIRTY, false,
                                                 Align.CENTER, true));
+                printTextCenter(call, "receiptType", "Merchant Name");
                 print.appendTextEntity2(print.getSeparatorLinetEntity());
                 print.appendTextEntity2(new TextEntity("NGN" + call.argument("originalMinorAmount").toString() + "\n",
                                 mCh, mEn, FontLattice.THIRTY, false, Align.CENTER, true));
@@ -158,6 +159,14 @@ public class SunyardPrinter {
                         print.appendTextEntity2(
                                         new TextEntity(title + ": " + call.argument(key).toString() + "\n", mCh, mEn,
                                                         FontLattice.TWENTY_FOUR, false, Align.LEFT, true));
+                }
+        }
+
+        private void printTextCenter(@NonNull MethodCall call, String key, String title) {
+                if (call.argument(key) != null) {
+                        print.appendTextEntity2(
+                                        new TextEntity(title + ": " + call.argument(key).toString() + "\n", mCh, mEn,
+                                                        FontLattice.TWENTY_FOUR, false, Align.CENTER, true));
                 }
         }
 
