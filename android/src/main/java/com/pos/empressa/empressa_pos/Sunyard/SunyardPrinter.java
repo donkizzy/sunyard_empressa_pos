@@ -25,12 +25,12 @@ public class SunyardPrinter {
 
         private void initPrinter(Context context) {
                 print = Printer2.getInstance(context);
-                boolean havePrinter = false;
-                try {
-                        havePrinter = print.havePrinter();
-                } catch (SDKException e) {
-                        e.printStackTrace();
-                }
+                // boolean havePrinter = false;
+                // try {
+                //         havePrinter = print.havePrinter();
+                // } catch (SDKException e) {
+                //         e.printStackTrace();
+                // }
         }
 
         public void startPrint(@NonNull MethodCall call) {
